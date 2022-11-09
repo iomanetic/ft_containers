@@ -17,6 +17,7 @@ namespace ft {
 
 		/*constructors and destructor*/
 		vector( void );
+		
 		/*methods*/
 		size_type size( void ) const;
 
