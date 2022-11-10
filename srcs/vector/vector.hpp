@@ -17,9 +17,11 @@ namespace ft {
 
 		/*constructors and destructor*/
 		vector( void );
-		
+
 		/*methods*/
 		size_type size( void ) const;
+		size_type capacity() const;
+		bool empty() const;
 
 	private:
 		T *_arr;
@@ -29,14 +31,24 @@ namespace ft {
 }
 
 template<typename T>
+ft::vector<T>::vector( void )
+	: _arr( nullptr ), _size( 0 ), _capacity( 0 ) {
+
+}
+
+template<typename T>
 typename ft::vector<T>::size_type ft::vector<T>::size( void ) const {
 	return ( this->_size );
 }
 
 template<typename T>
-ft::vector<T>::vector( void )
-	: _arr( nullptr ), _size( 0 ), _capacity( 0 ) {
+typename ft::vector<T>::size_type ft::vector<T>::capacity() const {
+	return ( this->_capacity );
+}
 
+template<typename T>
+bool ft::vector<T>::empty() const {
+	return ( this->_size == 0 );
 }
 
 #endif
