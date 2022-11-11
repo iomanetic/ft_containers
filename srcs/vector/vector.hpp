@@ -8,46 +8,63 @@
 #include <iostream>
 
 namespace ft {
-	template<typename T>
+	template< class T, class Alloc = std::allocator<T> >
 	class vector {
 	public:
 		/*typedefs*/
 		typedef std::size_t size_type;
 		typedef T value_type;
+		typedef Alloc allocator_type;
+		typedef typename std::allocator<T>::reference reference;
+		typedef typename std::allocator<T>::const_reference const_reference;
+		typedef typename std::allocator<T>::pointer pointer;
+		typedef typename std::allocator<T>::const_pointer const_pointer;
 
 		/*constructors and destructor*/
-		vector( void );
+		vector( const allocator_type& alloc = allocator_type() );
+		vector ( size_type n, const value_type& val = value_type(), const allocator_type& alloc = allocator_type() );
 
 		/*methods*/
 		size_type size( void ) const;
-		size_type capacity() const;
-		bool empty() const;
+		size_type capacity( void ) const;
+		bool empty( void ) const;
 
 	private:
-		T *_arr;
 		size_type _size;
 		size_type _capacity;
+		allocator_type _allocator;
+		value_type *_arr;
 	};
 }
 
-template<typename T>
-ft::vector<T>::vector( void )
-	: _arr( nullptr ), _size( 0 ), _capacity( 0 ) {
-
+template< class T, class Alloc >
+ft::vector<T, Alloc>::vector( const typename ft::vector<T, Alloc>::allocator_type& alloc ) \
+		: _size( 0 ), _capacity( 0 ), _allocator( alloc ), _arr( nullptr ) {
 }
 
-template<typename T>
-typename ft::vector<T>::size_type ft::vector<T>::size( void ) const {
+template< class T, class Alloc >
+ft::vector<T, Alloc>::vector( ft::vector<T, Alloc>::size_type n, \
+					   const typename ft::vector<T, Alloc>::value_type& val, \
+					   const typename ft::vector<T, Alloc>::allocator_type& alloc )
+					   : _size( n ), _capacity( n * 2 ), _allocator( alloc ),
+							  _arr( _allocator.allocate( _capacity * sizeof( value_type ) ) ) {
+	for( size_type i = 0; i < this->_size; ++i ) {
+		this->_arr[i] = val;
+	}
+}
+
+template< class T, class Alloc >
+typename ft::vector<T, Alloc>::size_type ft::vector<T, Alloc>::size( void ) const {
 	return ( this->_size );
 }
 
-template<typename T>
-typename ft::vector<T>::size_type ft::vector<T>::capacity() const {
+template< class T, class Alloc >
+typename ft::vector<T, Alloc>::size_type ft::vector<T, Alloc>::capacity( void ) const {
 	return ( this->_capacity );
 }
 
-template<typename T>
-bool ft::vector<T>::empty() const {
+template< class T, class Alloc >
+bool ft::vector<T, Alloc>::empty( void ) const {
 	return ( this->_size == 0 );
 }
 
