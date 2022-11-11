@@ -47,7 +47,7 @@ ft::vector<T, Alloc>::vector( ft::vector<T, Alloc>::size_type n, \
 					   const typename ft::vector<T, Alloc>::value_type& val, \
 					   const typename ft::vector<T, Alloc>::allocator_type& alloc )
 					   : _size( n ), _capacity( n ), _allocator( alloc ),
-							  _arr( _allocator.allocate( _capacity * sizeof( value_type ) ) ) {
+							  _arr( _allocator.allocate( _capacity ) ) {
 	for( size_type i = 0; i < this->_size; ++i ) {
 		this->_arr[i] = val;
 	}
